@@ -114,7 +114,7 @@ y(x) = f(z(x)) \qquad z(x) = W x
 \end{align}
 Derivatives with respect to the parameters W and the activations x:
 \begin{align}
-\frac{d y} { d W} &= \frac{ d y} {d z} \cdot \frac{d z} {d W} = f'(z(x)) \cdot \frac{d g} { d W} = f'(Wx) \cdot x^T \\
+\frac{d y} { d W} &= \frac{ d y} {d z} \cdot \frac{d z} {d W} = f'(z(x)) \cdot \frac{d z} { d W} = f'(Wx) \cdot x^T \\
 \frac{d y} { d x} &= \frac{ d y} {d z} \cdot \frac{d z} {d x} = f'(z(x)) \cdot \frac{d z} { d x} = f'(Wx) \cdot W
 \end{align}
 
@@ -315,23 +315,22 @@ specifies $ \alpha \approx 1.6733 $ and $ \lambda \approx 1.0507 $.
 
 %------------------------------------------------
 \begin{frame}{Why does that help?}
-	\begin{columns}[t]
+\begin{itemize}
+\item supports deeper fully connected neural networks
+\item matches a weight initialization of $\omega = 0$ and $ \tau = 1 $ very well 
+\item automatically normalizes the activations of each layer
+\begin{itemize}
+\item $y^{(n)} \circ y^{(n - 1)} \circ \ldots \circ y^{(1)}(x^{(1)}) $ with normalized input features $x^{(1)}$
+\item $y^{(n)} \circ y^{(n - 1)} \circ \ldots \circ y^{(k)}(x^{(k)}) $ with normalized activations $x^{(k)}$
+\end{itemize}
+\item prevents the gradient from exploding
+\begin{itemize}
+\item derivative of $\text{selu}(x) $ is highly bounded
+\item extreme activations are damped by the convergence to $(\mu, \nu) = (0, 1)$
+\end{itemize}
+\item guarantees non vanishing gradients
+\end{itemize}
 
-	\column{0.55 \textwidth}
-	\textbf{advantages}
-	\begin{itemize}
-	\item filters noise $X - W H $
-	\item basis vectors $h_i$ capture joint phenomena
-	\item basis vectors $h_i$ can be interpreted to draw conclusions about the dataset
-	\item imposing $W W^T  = I $ makes NMF equivalent to K-means clustering
-	\end{itemize}
-	\column{0.45 \textwidth}
-	\textbf{disadvantages}
-	\begin{itemize}
-	\item Finding coordinates $W$ requires solving $\min_{ W}  \left\lVert X - W H\right\rVert^2_F$.
-	\item limited to nonnegative matricies
-	\end{itemize}
-	\end{columns}
 \end{frame}
 
 
@@ -341,7 +340,7 @@ specifies $ \alpha \approx 1.6733 $ and $ \lambda \approx 1.0507 $.
 	Thank you \\
 	Questions?
 	\vfill
-	\href{https://github.com/spirousschuh/presentations/blob/master/NMF_fruit_purees/presentation/fruit_purees.pdf}
+	\href{https://github.com/spirousschuh/presentations/blob/master/paper_slides/self-normalizing_nns/slides.pdf}
 		{\small{Link to Slides}}
 
 
@@ -352,6 +351,13 @@ specifies $ \alpha \approx 1.6733 $ and $ \lambda \approx 1.0507 $.
 %----------------------------------------------------------------------------------------
 %	 CLOSING/SUPPLEMENTARY SLIDES
 %----------------------------------------------------------------------------------------
+
+\begin{frame}
+
+\includegraphics[width=0.6 \linewidth]{images/point_cloud.png}
+
+\end{frame}
+
 
 \appendix
 
